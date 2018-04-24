@@ -1,0 +1,121 @@
+git教程
+
+git是版本控制系统  version control system
+
+工作区----暂存区-----版本库
+
+公共命令
+
+git status
+查看当前仓库的状态
+
+
+
+1 配置
+git config命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"
+
+2.创建版本库  repository 里面的所有文件都能被git管理  包括修改 删除 跟踪历史记录
+把目录变为git可以管理的仓库
+git init
+多了一个.git目录，跟踪管理版本库
+*版本控制系统只能跟随文本文件的改动 图片等二进制文件变化后只知道大小的变化
+
+3.添加文件到版本库
+git add <file>(read.txt)
+git commit -m "xxx"("create read.txt")
+Q 为什么要用两步走  git add 和 git commit
+A 因为git可以一次性提交很多文件   所以可以多次add文件
+
+git diff HEAD -- ..txt文件
+查看修改的内容  在没有add之前查看
+
+git log
+查看commit的日志   所有的commit记录都在这里   commit tree
+
+git log --pretty=oneline
+省略输出信息
+
+git reset --hard <commit_id>
+回退   回退到id对应的那次提交
+
+git reflog
+查看历史命令   记录每一次命令   可以回退到未来版本
+
+工作区和版本库  working directory 和  repository
+版本库里有stage区（暂存区）
+untracked状态
+
+git checkout -- readme.txt
+--很重要，没有--，就变成了“切换到另一个分支”的命令
+1. readme.txt没有add到暂存区 那就撤销到和版本库一样的状态
+2. readme.txt已经add到暂存区后又做了修改 回到添加到暂存区后的状态
+
+git reset HEAD readme.txt
+可以把暂存区的修改撤销掉
+
+//删除一个文件之后
+git rm test.txt
+git commit -m "delete"
+在版本库也删除  并提交
+删错了恢复
+git checkout -- test.txt
+
+
+git remote add origin git@github.com:a5161585/howtolearngit.git
+添加github上的远程仓库  别名为origin
+
+如果提交失败 说明有冲突
+就要先pull一下
+git pull renyujie master
+
+提交
+git push renyujie master
+第一次提交时  git push -u renyujie master 我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+克隆
+git clone web URL（https或SSH）
+
+分支管理
+
+新建分支
+git checkout -b dev ==   git branch dev  git checkout dev
+
+查看现在处于哪个分支
+git branch
+
+合并
+git merge dev
+
+删除分支
+git branch -d dev
+
+强制禁用Fast forward
+ git merge --no-ff -m "merge with no-ff" dev
+
+ 储藏工作现场
+ git stash
+
+git stash list
+
+ 恢复并清除stash
+ git stash pop
+
+强行删除
+ git branch -D <name>
+
+ 远程库信息
+ git remote
+
+ git remote -v
+
+ 推送分支
+ git push renyujie master
+
+
+ 设置本地分支dev  与  远程分支  renyujie/dev 链接
+ git branch --set-upstream dev renyujie/dev
+
+ 打标签
+ git tag -a -v1.0 -m "version 1.0 released" <id>
